@@ -12,10 +12,6 @@ You can talk to the bot in voice messages, the bot will transcribe and respond. 
 
 We are adding commercial support to this project so users can buy subscriptions to user the bot
 
-<p align="center">
-<img width="904" alt="Whatsapp ChatGPT" src="https://user-images.githubusercontent.com/6507938/220681521-17a12a41-44df-4d51-b491-f6a83871fc9e.png">
-</p>
-
 ## Requirements
 
 -   Node.js (18 or newer)
