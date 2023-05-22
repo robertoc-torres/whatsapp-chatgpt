@@ -1,4 +1,4 @@
-# GPT + DALL-E + WhatsApp = AI Assistant 🚀
+# GPT + DALL-E + WhatsApp + AWS = AI Assistant Commercial Ready 🚀
 
 ![Docker](https://github.com/askrella/whatsapp-chatgpt/actions/workflows/docker.yml/badge.svg)
 ![Prettier](https://github.com/askrella/whatsapp-chatgpt/actions/workflows/prettier.yml/badge.svg)
@@ -10,6 +10,8 @@ This WhatsApp bot uses OpenAI's GPT and DALL-E 2 to respond to user inputs.
 
 You can talk to the bot in voice messages, the bot will transcribe and respond. :robot:
 
+We are adding commercial support to this project so users can buy subscriptions to user the bot
+
 <p align="center">
 <img width="904" alt="Whatsapp ChatGPT" src="https://user-images.githubusercontent.com/6507938/220681521-17a12a41-44df-4d51-b491-f6a83871fc9e.png">
 </p>
@@ -20,6 +22,7 @@ You can talk to the bot in voice messages, the bot will transcribe and respond. 
 -   A recent version of npm
 -   An [OpenAI API key](https://beta.openai.com/signup)
 -   A WhatsApp account
+-   An AWS Account
 
 ## Documentation
 
