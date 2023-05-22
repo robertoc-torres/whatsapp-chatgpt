@@ -2,23 +2,21 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import { randomUUID } from "crypto";
-import { ChatGPT } from "chatgpt-official";
+import { ChatGPTAPI } from "chatgpt";
 import ffmpeg from "fluent-ffmpeg";
 import { Configuration, OpenAIApi } from "openai";
 import { blobFromSync, File } from "fetch-blob/from.js";
 import config from "../config";
+import * as cli from "../cli/ui";
 
-let options = {
-	temperature: 0.7, // OpenAI parameter
-	max_tokens: config.maxModelTokens, // OpenAI parameter [Max response size by tokens]
-	top_p: 0.9, // OpenAI parameter
-	frequency_penalty: 0, // OpenAI parameter
-	presence_penalty: 0, // OpenAI parameter
-	// instructions: ``,
-	model: config.openAIModel // OpenAI model
-};
-
-export const chatgpt = new ChatGPT(config.openAIAPIKey, options); // Note: options is optional
+export const api = new ChatGPTAPI({
+	apiKey: config.openAIAPIKey,
+	completionParams: {
+		model: 'gpt-3.5-turbo',
+		temperature: 0.5,
+		top_p: 0.8
+	}
+})
 
 // OpenAI Client (DALL-E)
 export const openai = new OpenAIApi(
@@ -69,14 +67,14 @@ export async function transcribeOpenAI(audioBuffer: Buffer): Promise<{ text: str
 	try {
 		response = await fetch(url, options);
 	} catch (e) {
-		console.error(e);
+		cli.print(e);
 	} finally {
 		fs.unlinkSync(oggPath);
 		fs.unlinkSync(wavPath);
 	}
 
 	if (!response || response.status != 200) {
-		console.error(response);
+		cli.print(response);
 		return {
 			text: "",
 			language: language

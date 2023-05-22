@@ -20,16 +20,17 @@ interface IConfig {
 	prefixEnabled: boolean;
 	prefixSkippedForMe: boolean;
 	gptPrefix: string;
+	statusPrefix: string;
+	trialLimitRequest: string;
 	dallePrefix: string;
 	resetPrefix: string;
 	aiConfigPrefix: string;
 
+	// Dalle
+	imagesPath: string;
+
 	// Groupchats
 	groupchatsEnabled: boolean;
-
-	// AllowedListOnly
-	allowedListEnabled: boolean;
-	allowedContacts: string[];
 
 	// Prompt Moderation
 	promptModerationEnabled: boolean;
@@ -64,18 +65,18 @@ const config: IConfig = {
 	// Prefix
 	prefixEnabled: getEnvBooleanWithDefault("PREFIX_ENABLED", true), // Default: true
 	prefixSkippedForMe: getEnvBooleanWithDefault("PREFIX_SKIPPED_FOR_ME", true), // Default: true
-	gptPrefix: process.env.GPT_PREFIX || "!gpt", // Default: !gpt
-	dallePrefix: process.env.DALLE_PREFIX || "!dalle", // Default: !dalle
+	gptPrefix: process.env.GPT_PREFIX || "!chat", // Default: !chat
+	statusPrefix: process.env.STATUS_PREFIX || "!status", // Default: !status
+	trialLimitRequest: process.env.TRIAL_LIMIT_REQUEST || "1000", // Default: 1000
+	dallePrefix: process.env.DALLE_PREFIX || "!img", // Default: !dalle
 	resetPrefix: process.env.RESET_PREFIX || "!reset", // Default: !reset
 	aiConfigPrefix: process.env.AI_CONFIG_PREFIX || "!config", // Default: !config
 
+	// Dalle
+	imagesPath: process.env.IMAGES_PATH || "./images/", // Default: ./images/;
+
 	// Groupchats
 	groupchatsEnabled: getEnvBooleanWithDefault("GROUPCHATS_ENABLED", false), // Default: false
-
-	// AllowedListOnly
-	allowedListEnabled: getEnvBooleanWithDefault("ALLOWEDLIST_ENABLED", false), // Default: false;
-	allowedContacts: getEnvAllowedContacts(), // Default: ["hate", "hate/threatening", "self-harm", "sexual", "sexual/minors", "violence", "violence/graphic"]
-
 
 	// Prompt Moderation
 	promptModerationEnabled: getEnvBooleanWithDefault("PROMPT_MODERATION_ENABLED", false), // Default: false
@@ -99,7 +100,7 @@ const config: IConfig = {
 	ttsMode: getEnvTTSMode(), // Default: speech-api
 
 	// Transcription
-	transcriptionEnabled: getEnvBooleanWithDefault("TRANSCRIPTION_ENABLED", false), // Default: false
+	transcriptionEnabled: getEnvBooleanWithDefault("TRANSCRIPTION_ENABLED", true), // Default: false
 	transcriptionMode: getEnvTranscriptionMode(), // Default: local
 	transcriptionLanguage: process.env.TRANSCRIPTION_LANGUAGE || "" // Default: null
 };
@@ -165,7 +166,7 @@ function getEnvPromptModerationBlacklistedCategories(): string[] {
 function getEnvTranscriptionMode(): TranscriptionMode {
 	const envValue = process.env.TRANSCRIPTION_MODE?.toLowerCase();
 	if (envValue == undefined || envValue == "") {
-		return TranscriptionMode.Local;
+		return TranscriptionMode.OpenAI;
 	}
 
 	return envValue as TranscriptionMode;

@@ -61,16 +61,14 @@ const start = async () => {
 
 	// WhatsApp message
 	client.on(Events.MESSAGE_RECEIVED, async (message: any) => {
-		// Ignore if message is from status broadcast
-		if (message.from == constants.statusBroadcast) return;
-
 		// Ignore if it's a quoted message, (e.g. Bot reply)
 		if (message.hasQuotedMsg) return;
-
+		// Ignore if message is from status broadcast
+		if (message.from == constants.statusBroadcast) return;
 		await handleIncomingMessage(message);
 	});
 
-	// Reply to own message
+	/* Reply to own message
 	client.on(Events.MESSAGE_CREATE, async (message: Message) => {
 		// Ignore if message is from status broadcast
 		if (message.from == constants.statusBroadcast) return;
@@ -82,7 +80,7 @@ const start = async () => {
 		if (!message.fromMe) return;
 
 		await handleIncomingMessage(message);
-	});
+	});*/
 
 	// WhatsApp initialization
 	client.initialize();
